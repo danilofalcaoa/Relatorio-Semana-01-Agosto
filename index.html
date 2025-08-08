@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Semanal - 01 a 07 de Agosto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: #1e3c72;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #1e3c72;
+            font-size: 1.1em;
+        }
+
+        .metric-value.negative {
+            color: #e74c3c;
+        }
+
+        .metric-value.positive {
+            color: #27ae60;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .summary h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .summary ul {
+            list-style: none;
+        }
+
+        .summary li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .summary li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Fechamento da Semana</h1>
+            <p>01 de Agosto - 01/08 a 07/08</p>
+        </div>
+
+        <div class="content">
+            <div class="grid">
+                <!-- Financeiro -->
+                <div class="card animate-fade-in" style="animation-delay: 0.1s;">
+                    <h3><span class="icon">💰</span>Financeiro</h3>
+                    <div class="metric">
+                        <span class="metric-label">Ticket médio</span>
+                        <span class="metric-value">R$ 175,54</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Faturamento</span>
+                        <span class="metric-value">R$ 81.448,73</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Faturamento marketplaces</span>
+                        <span class="metric-value">98,39%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Conversão do checkout</span>
+                        <span class="metric-value">44,29%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Vendas</span>
+                        <span class="metric-value">464</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Clientes recorrentes</span>
+                        <span class="metric-value">31,69%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Custo de produto</span>
+                        <span class="metric-value">20,80%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Gasto em anúncios</span>
+                        <span class="metric-value">R$ 43.881,39</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Lucro</span>
+                        <span class="metric-value negative">-R$ 11.167,92</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Gastos totais</span>
+                        <span class="metric-value">R$ 92.616,65</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Margem</span>
+                        <span class="metric-value negative">-13,71%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Média lucro diário</span>
+                        <span class="metric-value negative">-R$ 1.595,42</span>
+                    </div>
+                </div>
+
+                <!-- Métodos de Pagamento -->
+                <div class="card animate-fade-in" style="animation-delay: 0.2s;">
+                    <h3><span class="icon">💳</span>Métodos de Pagamento</h3>
+                    <div class="metric">
+                        <span class="metric-label">Vendas PIX</span>
+                        <span class="metric-value">44,97%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 44.97%"></div>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Vendas cartão de crédito</span>
+                        <span class="metric-value">55,23%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 55.23%"></div>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Conversão de PIX</span>
+                        <span class="metric-value positive">89,50%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Cartões recusados</span>
+                        <span class="metric-value">0,71%</span>
+                    </div>
+                </div>
+
+                <!-- Ocorrências -->
+                <div class="card animate-fade-in" style="animation-delay: 0.3s;">
+                    <h3><span class="icon">⚠️</span>Ocorrências</h3>
+                    <div class="metric">
+                        <span class="metric-label">Total</span>
+                        <span class="metric-value">5,82%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Trocas</span>
+                        <span class="metric-value">0,00%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Devoluções</span>
+                        <span class="metric-value">0,22%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Reenvios</span>
+                        <span class="metric-value">2,37%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Cancelados</span>
+                        <span class="metric-value">0,00%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Estorno 100%</span>
+                        <span class="metric-value">1,51%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Estorno 50%</span>
+                        <span class="metric-value">1,29%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Estorno parcial</span>
+                        <span class="metric-value">0,43%</span>
+                    </div>
+                </div>
+
+                <!-- Origens de Venda -->
+                <div class="card animate-fade-in" style="animation-delay: 0.4s;">
+                    <h3><span class="icon">🎯</span>Origens de Venda</h3>
+                    <div class="metric">
+                        <span class="metric-label">Email</span>
+                        <span class="metric-value">1,01%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Facebook</span>
+                        <span class="metric-value">60,91%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60.91%"></div>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Google</span>
+                        <span class="metric-value">12,56%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Organic</span>
+                        <span class="metric-value">21,65%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Salesarmy</span>
+                        <span class="metric-value">1,80%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Faturamento marketplaces</span>
+                        <span class="metric-value">2,05% (R$ 1.673,00)</span>
+                    </div>
+                </div>
+
+                <!-- Teste de Anúncios -->
+                <div class="card animate-fade-in" style="animation-delay: 0.5s;">
+                    <h3><span class="icon">🧪</span>Teste de Anúncios</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #667eea;">8</div>
+                            <div class="stat-label">Em teste</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #e74c3c;">1</div>
+                            <div class="stat-label">Não-validados</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #27ae60;">0</div>
+                            <div class="stat-label">Validados</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #f39c12;">11</div>
+                            <div class="stat-label">Ads de promo e lançamento</div>
+                        </div>
+                    </div>
+                    <div class="metric" style="margin-top: 15px;">
+                        <span class="metric-label">Total</span>
+                        <span class="metric-value">20</span>
+                    </div>
+                </div>
+
+                <!-- Conteúdo e Copy -->
+                <div class="card animate-fade-in" style="animation-delay: 0.6s;">
+                    <h3><span class="icon">✍️</span>Conteúdo e Copy</h3>
+                    <div class="metric">
+                        <span class="metric-label">Materiais recebidos</span>
+                        <span class="metric-value">4</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Escoados</span>
+                        <span class="metric-value">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Scripts ajustados para hook + cta tofu</span>
+                        <span class="metric-value">17</span>
+                    </div>
+                </div>
+
+                <!-- Edições Entregues -->
+                <div class="card animate-fade-in" style="animation-delay: 0.7s;">
+                    <h3><span class="icon">🎬</span>Edições Entregues</h3>
+                    <div class="metric">
+                        <span class="metric-label">Vídeos</span>
+                        <span class="metric-value">13</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Estáticos</span>
+                        <span class="metric-value">1</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Infra</span>
+                        <span class="metric-value">7</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Email</span>
+                        <span class="metric-value">2</span>
+                    </div>
+                </div>
+
+                <!-- Social -->
+                <div class="card animate-fade-in" style="animation-delay: 0.8s;">
+                    <h3><span class="icon">📱</span>Social</h3>
+                    <div class="metric">
+                        <span class="metric-label">Posts no Instagram</span>
+                        <span class="metric-value">12 (6 agendados)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Posts no TikTok</span>
+                        <span class="metric-value">7 (3 agendados)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Stories postados/repostados</span>
+                        <span class="metric-value">48 (35 reposts/13 postados)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo da Semana -->
+            <div class="summary animate-fade-in" style="animation-delay: 0.9s;">
+                <h3>📋 Resumo da Semana</h3>
+                <ul>
+                    <li>Semana organizacional: kanban + entrada da Ray + lançamento + Vini</li>
+                    <li>Performance caiu muito</li>
+                    <li>Definimos ajuste loja + oferta lançamento semana que vem</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate progress bars on load
+        window.addEventListener('load', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+
+        // Add scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
